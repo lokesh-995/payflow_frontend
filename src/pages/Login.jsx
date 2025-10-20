@@ -13,6 +13,7 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
   const [emailFocused, setEmailFocused] = useState(false);
   const [passwordFocused, setPasswordFocused] = useState(false);
+  const baseurl = import.meta.env.VITE_API_BASE_URL;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -22,15 +23,16 @@ export default function Login() {
     // Clear any potential onboarding-related localStorage data
     localStorage.removeItem("onboarding_step");
     localStorage.removeItem("onboarding_data");
-    
-    let url;
-    if (role === "admin") {
-      url = "/api/admins/login";
-    } else if (role === "employee") {
-      url = "/api/employees/login";
-    } else {
-      url = "/api/users/login";
-    }
+  
+   let url;
+if (role === "admin") {
+  url = `${baseurl}/api/admins/login`;  // use backticks!
+} else if (role === "employee") {
+  url = `${baseurl}/api/employees/login`;
+} else {
+  url = `${baseurl}/api/users/login`;
+}
+
     try {
       console.log(url);
       const res = await fetch(url, {
