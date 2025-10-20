@@ -13,7 +13,7 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
   const [emailFocused, setEmailFocused] = useState(false);
   const [passwordFocused, setPasswordFocused] = useState(false);
-  const baseurl = import.meta.env.Backendurl;
+  const baseurl = import.meta.env.VITE_API_BASE_URL
 
   const handleSubmit = async (e) => {
     e.preventDefault();
