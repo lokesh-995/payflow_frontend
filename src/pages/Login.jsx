@@ -32,6 +32,7 @@ export default function Login() {
       url = "/api/users/login";
     }
     try {
+      console.log(url);
       const res = await fetch(url, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
