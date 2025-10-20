@@ -27,8 +27,10 @@ const RegisterPage = () => {
     let url = `${baseurl}/api/admins/register`;
     let body = { username: form.username, email: form.email, password: form.password };
     try {
+      console.log(baseurl);
       const res = await fetch(url, {
         method: "POST",
+        credentials: "include" ,
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body)
       });
