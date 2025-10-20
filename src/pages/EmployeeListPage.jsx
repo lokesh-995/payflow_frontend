@@ -11,12 +11,13 @@ export default function EmployeeListPage() {
   const [error, setError] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const employeesPerPage = 10;
+  const baseurl = import.meta.env.VITE_API_BASE_URL
 
   const fetchEmployees = useCallback(async () => {
     setLoading(true);
     setError("");
     try {
-      const res = await fetch("/api/employees/getAll");
+      const res = await fetch(`${baseurl}/api/employees/getAll`);
       if (!res.ok) throw new Error("Failed to fetch employees");
       const data = await res.json();
       setEmployees(Array.isArray(data) ? data : []);

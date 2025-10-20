@@ -26,11 +26,11 @@ export default function Login() {
   
    let url;
 if (role === "admin") {
-  url = `${baseurl}/api/admins/login`;  // use backticks!
+  url = `${baseurl}/admins/login`;  // use backticks!
 } else if (role === "employee") {
-  url = `${baseurl}/api/employees/login`;
+  url = `${baseurl}/employees/login`;
 } else {
-  url = `${baseurl}/api/users/login`;
+  url = `${baseurl}/users/login`;
 }
 
     try {
