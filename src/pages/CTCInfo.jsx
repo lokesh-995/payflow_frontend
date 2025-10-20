@@ -35,6 +35,7 @@ export default function CTCInfo() {
   const [historyLoading, setHistoryLoading] = useState(false);
   const [historyError, setHistoryError] = useState(null);
   const [showCTCDetails, setShowCTCDetails] = useState(false);
+   const baseurl = import.meta.env.VITE_API_BASE_URL;
   
   // Edit form state
   const [editForm, setEditForm] = useState({
@@ -76,7 +77,7 @@ export default function CTCInfo() {
       console.log("Searching for employee:", employeeId);
 
       // First, fetch employee details
-      const employeeResponse = await fetch(`/api/employees/${employeeId}`, {
+      const employeeResponse = await fetch(`${baseurl}/api/employees/${employeeId}`, {
         method: "GET",
         credentials: "include",
         headers: {
@@ -101,7 +102,7 @@ export default function CTCInfo() {
       setEmployeeData(employee);
 
       // Then, fetch CTC details
-      const ctcResponse = await fetch(`/api/ctc/employee/${employeeId}/latest`, {
+      const ctcResponse = await fetch(`${baseurl}/api/ctc/employee/${employeeId}/latest`, {
         method: "GET",
         credentials: "include",
         headers: {
@@ -211,8 +212,8 @@ export default function CTCInfo() {
 
       const method = ctcData ? "PUT" : "POST";
       const url = ctcData 
-        ? `/api/ctc/${ctcData.ctcId}` 
-        : `/api/ctc/employee/${employeeData.employeeId || employeeData.id}`;
+        ? `${baseurl}/api/ctc/${ctcData.ctcId}` 
+        : `${baseurl}/api/ctc/employee/${employeeData.employeeId || employeeData.id}`;
 
       const response = await fetch(url, {
         method: method,
@@ -278,10 +279,10 @@ export default function CTCInfo() {
       
       // Try multiple possible endpoints
       const endpoints = [
-        `/api/ctc/employee/${employeeId}/history`,
-        `/api/ctc/history/${employeeId}`,
-        `/api/ctc/${employeeId}/history`,
-        `/api/employees/${employeeId}/ctc/history`
+        `${baseurl}/api/ctc/employee/${employeeId}/history`,
+        `${baseurl}/api/ctc/history/${employeeId}`,
+        `${baseurl}/api/ctc/${employeeId}/history`,
+        `${baseurl}/api/employees/${employeeId}/ctc/history`
       ];
       
       let response = null;

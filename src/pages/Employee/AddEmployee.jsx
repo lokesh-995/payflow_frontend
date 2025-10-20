@@ -44,7 +44,7 @@ export default function AddEmployee() {
 
   const fetchCurrentUserRole = async () => {
     try {
-      const res = await fetch("/api/employees/current-user-role", {
+      const res = await fetch(`${baseurl}/api/employees/current-user-role`, {
         credentials: "include"
       });
       if (res.ok) {
@@ -72,7 +72,7 @@ export default function AddEmployee() {
   const fetchManagers = async () => {
     setManagersLoading(true);
     try {
-      const res = await fetch("/api/employees/managers", {
+      const res = await fetch(`${baseurl}/api/employees/managers`, {
         credentials: "include"
       });
       if (res.ok) {
@@ -133,6 +133,7 @@ export default function AddEmployee() {
   const [managersLoading, setManagersLoading] = useState(false);
   const [currentUserRole, setCurrentUserRole] = useState(null);
   const [currentUser, setCurrentUser] = useState(null);
+   const baseurl = import.meta.env.VITE_API_BASE_URL
 
   const handleChange = e => {
     const { name, value } = e.target;
@@ -621,7 +622,7 @@ export default function AddEmployee() {
       
       console.log("Sending employee data to backend:", employeeData); // Debug log
       
-      const res = await fetch("/api/employees/add", {
+      const res = await fetch(`${baseurl}/api/employees/add`, {
         method: "POST",
         credentials: "include",
         headers: { "Content-Type": "application/json" },
@@ -696,7 +697,7 @@ export default function AddEmployee() {
             console.log("Sending CTC data to backend for employee ID:", employeeId);
             console.log("CTC data:", ctcData);
             
-            const ctcRes = await fetch(`/api/ctc/employee/${employeeId}`, {
+            const ctcRes = await fetch(`${baseurl}/api/ctc/employee/${employeeId}`, {
               method: "POST",
               credentials: "include",
               headers: { "Content-Type": "application/json" },

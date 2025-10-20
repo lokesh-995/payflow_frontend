@@ -4,7 +4,7 @@ import { FaSignOutAlt } from "react-icons/fa";
 const EmployeeSidebar = React.memo(({ activePage = "dashboard" }) => {
   const handleLogout = useCallback(async () => {
     try {
-      await fetch("/api/users/logout", {
+      await fetch(`${baseurl}/api/users/logout`, {
         method: "POST",
         credentials: "include",
       });
@@ -14,7 +14,7 @@ const EmployeeSidebar = React.memo(({ activePage = "dashboard" }) => {
     localStorage.removeItem("payflow_user");
     window.location.href = "/login";
   }, []);
-
+ const baseurl = import.meta.env.VITE_API_BASE_URL
   const sidebarPalette = {
     accent: "#6366f1",
     teal: "#06b6d4",

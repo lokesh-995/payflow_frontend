@@ -28,6 +28,7 @@ export default function LeavesInfo() {
   const [employee, setEmployee] = useState(null);
   const [currentTime, setCurrentTime] = useState(() => new Date());
   const [filter, setFilter] = useState("ALL"); // ALL, PENDING, APPROVED, REJECTED
+   const baseurl = import.meta.env.VITE_API_BASE_URL;
 
   useEffect(() => {
     const interval = setInterval(() => setCurrentTime(new Date()), 1000);
@@ -57,7 +58,7 @@ export default function LeavesInfo() {
         } else {
           // Fallback to API call if no localStorage data
           console.log("No localStorage data, fetching from API...");
-          const res = await fetch("/api/employees/me", {
+          const res = await fetch(`${baseurl}/api/employees/me`, {
             method: "GET",
             credentials: "include",
             headers: {
@@ -118,7 +119,7 @@ export default function LeavesInfo() {
 
       try {
         const employeeId = employee.employeeId || employee.id;
-        const response = await fetch(`/api/leaves/${employeeId}`, {
+        const response = await fetch(`${baseurl}/api/leaves/${employeeId}`, {
           method: "GET",
           credentials: "include",
         });

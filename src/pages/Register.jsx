@@ -13,6 +13,7 @@ const RegisterPage = () => {
   const [emailFocused, setEmailFocused] = useState(false);
   const [passwordFocused, setPasswordFocused] = useState(false);
   const [usernameFocused, setUsernameFocused] = useState(false);
+   const baseurl = import.meta.env.VITE_API_BASE_URL;
 
   const handleChange = e => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -23,7 +24,7 @@ const RegisterPage = () => {
     setError("");
     setLoading(true);
     console.log("Submitting registration:", form);
-    let url = "/api/admins/register";
+    let url = `${baseurl}/api/admins/register`;
     let body = { username: form.username, email: form.email, password: form.password };
     try {
       const res = await fetch(url, {

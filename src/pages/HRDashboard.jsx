@@ -43,6 +43,7 @@ export default function HRDashboard() {
   const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const employeesPerPage = 10;
+   const baseurl = import.meta.env.VITE_API_BASE_URL;
   
   // Modal states for employee details
   const [showDetailsModal, setShowDetailsModal] = useState(false);
@@ -68,7 +69,7 @@ export default function HRDashboard() {
   const fetchEmployees = useCallback(() => {
     setLoading(true);
     setError(null);
-    fetch("/api/employees/getAll", {
+    fetch(`${baseurl}/api/employees/getAll`, {
       method: "GET",
       credentials: "include",
       headers: {
@@ -103,7 +104,7 @@ export default function HRDashboard() {
     setPendingLeavesLoading(true);
     try {
       console.log("Fetching pending leave requests...");
-      const response = await fetch("/api/leaves/all", {
+      const response = await fetch(`${baseurl}/api/leaves/all`, {
         method: "GET",
         credentials: "include",
         headers: {
@@ -176,7 +177,7 @@ export default function HRDashboard() {
   const handleToggleStatus = useCallback(async (employeeId, currentStatus) => {
     try {
       console.log(`Toggling status for employee ${employeeId} from ${currentStatus} to ${!currentStatus}`);
-      const res = await fetch(`/api/employees/${employeeId}/status`, {
+      const res = await fetch(`${baseurl}/api/employees/${employeeId}/status`, {
         method: "PUT",
         headers: { 
           "Content-Type": "application/json" 
@@ -224,7 +225,7 @@ export default function HRDashboard() {
       console.log("Fetching employee details for ID:", employeeId);
       
       // First, fetch the complete employee profile to get accurate totalLeaves
-      const employeeResponse = await fetch(`/api/employees/${employeeId}`, {
+      const employeeResponse = await fetch(`${baseurl}/api/employees/${employeeId}`, {
         method: "GET",
         credentials: "include",
         headers: {
@@ -241,7 +242,7 @@ export default function HRDashboard() {
       }
       
       // Then fetch employee's leave data to calculate correct remaining leaves
-      const leavesResponse = await fetch(`/api/leaves/${employeeId}`, {
+      const leavesResponse = await fetch(`${baseurl}/api/leaves/${employeeId}`, {
         method: "GET",
         credentials: "include",
         headers: {
@@ -303,7 +304,7 @@ export default function HRDashboard() {
     
     try {
       console.log("Fetching past experiences for employee:", emp.employeeId || emp.id);
-      const res = await fetch(`/api/employees/${emp.employeeId || emp.id}/experiences`, {
+      const res = await fetch(`${baseurl}/api/employees/${emp.employeeId || emp.id}/experiences`, {
         method: "GET",
         credentials: "include",
         headers: {

@@ -17,10 +17,11 @@ const Sidebar = () => {
   }
 
   const handleLogout = async () => {
+     const baseurl = import.meta.env.VITE_API_BASE_URL
     let url =
       localUser && localUser.role === "admin"
-        ? "/api/admins/logout"
-        : "/api/users/logout";
+        ? `${baseurl}/api/admins/logout`
+        : `${baseurl}/api/users/logout`;
     try {
       await fetch(url, {
         method: "POST",

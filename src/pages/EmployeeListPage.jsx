@@ -11,7 +11,7 @@ export default function EmployeeListPage() {
   const [error, setError] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const employeesPerPage = 10;
-  const baseurl = import.meta.env.VITE_API_BASE_URL
+  const baseurl = import.meta.env.VITE_API_BASE_URL;
 
   const fetchEmployees = useCallback(async () => {
     setLoading(true);

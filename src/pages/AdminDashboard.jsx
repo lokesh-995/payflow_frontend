@@ -117,7 +117,7 @@ export default function AdminDashboard({ active }) {
   // Modal state for employee details
   const [showDetailsModal, setShowDetailsModal] = useState(false);
   const [selectedEmployee, setSelectedEmployee] = useState(null);
-
+ const baseurl = import.meta.env.VITE_API_BASE_URL
 
   // Fetch past experiences for an employee (use correct endpoint)
   const handleShowPastExp = async (emp) => {
@@ -126,7 +126,7 @@ export default function AdminDashboard({ active }) {
     setExpError("");
     setExpEmp(emp);
     try {
-      const res = await fetch(`/api/employees/${emp.employeeId || emp.id}/experiences`);
+      const res = await fetch(`${baseurl}/api/employees/${emp.employeeId || emp.id}/experiences`);
       if (!res.ok) throw new Error("Failed to fetch past experiences");
       const data = await res.json();
       setExpData(Array.isArray(data) ? data : []);
@@ -155,7 +155,7 @@ export default function AdminDashboard({ active }) {
       const employeeId = emp.employeeId || emp.id;
       
       // First, fetch the complete employee profile to get accurate totalLeaves
-      const employeeResponse = await fetch(`/api/employees/${employeeId}`, {
+      const employeeResponse = await fetch(`${baseurl}/api/employees/${employeeId}`, {
         method: "GET",
         credentials: "include",
       });
@@ -166,7 +166,7 @@ export default function AdminDashboard({ active }) {
       }
       
       // Then fetch employee's leave data to calculate correct remaining leaves
-      const leavesResponse = await fetch(`/api/leaves/${employeeId}`, {
+      const leavesResponse = await fetch(`${baseurl}/api/leaves/${employeeId}`, {
         method: "GET",
         credentials: "include",
       });
@@ -244,7 +244,7 @@ export default function AdminDashboard({ active }) {
       setLoading(true);
       setError("");
       console.log("Fetching users...");
-      const res = await fetch("/api/users/getAllUsers", {
+      const res = await fetch(`${baseurl}/api/users/getAllUsers`, {
         method: "GET",
         credentials: "include",
         headers: {
@@ -297,7 +297,7 @@ export default function AdminDashboard({ active }) {
     setLoading(true);
     try {
       console.log("Submitting user registration:", form);
-      const res = await fetch("/api/users/register", {
+      const res = await fetch(`${baseurl}/api/users/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
@@ -349,7 +349,7 @@ export default function AdminDashboard({ active }) {
       const newStatusBool = user.status === "active" ? false : true;
       console.log(`Toggling user ${id} status from ${user.status} to ${newStatusBool ? 'active' : 'inactive'}`);
       
-      const res = await fetch(`/api/users/${id}/status`, {
+      const res = await fetch(`${baseurl}/api/users/${id}/status`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
@@ -464,6 +464,7 @@ export default function AdminDashboard({ active }) {
   });
   const monthData = sortedMonths.map(m => userMonthCounts[m]);
 
+
   const lineData = {
     labels: monthLabels,
     datasets: [
@@ -501,6 +502,7 @@ export default function AdminDashboard({ active }) {
 
   const [empCurrentPage, setEmpCurrentPage] = useState(1);
   const employeesPerPage = 10;
+  
 
  useEffect(() => {
     const fetchEmployees = async () => {
@@ -508,7 +510,7 @@ export default function AdminDashboard({ active }) {
       setError("");
       try {
         console.log("Fetching employees...");
-        const res = await fetch("/api/employees/getAll", {
+        const res = await fetch(`${baseurl}/api/employees/getAll `, {
           method: "GET",
           credentials: "include",
           headers: {

@@ -35,6 +35,7 @@ export default function LeaveRequests() {
   // Pagination states
   const [currentPage, setCurrentPage] = useState(1);
   const recordsPerPage = 5;
+   const baseurl = import.meta.env.VITE_API_BASE_URL
   
   // Filter state
   const [filter, setFilter] = useState("ALL");
@@ -70,7 +71,7 @@ export default function LeaveRequests() {
       let response;
       try {
         // Try primary API endpoint
-        response = await fetch("/api/leaves/all", {
+        response = await fetch(`${baseurl}/api/leaves/all`, {
           method: "GET",
           credentials: "include",
           headers,
@@ -78,7 +79,7 @@ export default function LeaveRequests() {
         
         // If 401/403, try with session authentication only
         if (response.status === 401 || response.status === 403) {
-          response = await fetch("/api/leaves/all", {
+          response = await fetch(`${baseurl}/api/leaves/all`, {
             method: "GET",
             credentials: "include",
             headers: {
@@ -183,7 +184,7 @@ export default function LeaveRequests() {
     
     try {
       const status = action === "approve" ? "APPROVED" : "REJECTED";
-      const response = await fetch(`/api/leaves/${leaveId}/status?status=${status}`, {
+      const response = await fetch(`${baseurl}/api/leaves/${leaveId}/status?status=${status}`, {
         method: "PUT",
         credentials: "include",
         headers: {

@@ -16,6 +16,7 @@ const ResetPassword = () => {
   const [oldPasswordFocused, setOldPasswordFocused] = useState(false);
   const [newPasswordFocused, setNewPasswordFocused] = useState(false);
   const [confirmPasswordFocused, setConfirmPasswordFocused] = useState(false);
+   const baseurl = import.meta.env.VITE_API_BASE_URL
 
   // Get user info from localStorage to determine if it's an employee
   const getUserInfo = () => {
@@ -39,12 +40,12 @@ const ResetPassword = () => {
     try {
       const user = getUserInfo();
       // Determine the correct API endpoint based on user type
-      let apiUrl = "/api/users/reset-password"; // default for HR/Manager
+      let apiUrl = `${baseurl}/api/users/reset-password`; // default for HR/Manager
       
       // Check if user is an employee (could be role === "EMPLOYEE" or if they came from employee login)
       console.log("User Info:", user);
       if (user && (user.role === "EMPLOYEE" || user.isEmployee || user.employeeId)) {
-        apiUrl = "/api/employees/employee/reset-password";
+        apiUrl = `${baseurl}/api/employees/employee/reset-password`;
       }
 
       const res = await fetch(apiUrl, {

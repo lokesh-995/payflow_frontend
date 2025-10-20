@@ -19,6 +19,7 @@ export default function PayslipGeneration() {
   const [showPayslip, setShowPayslip] = useState(false);
   const [loading, setLoading] = useState(false);
   const [employeesLoading, setEmployeesLoading] = useState(false);
+   const baseurl = import.meta.env.VITE_API_BASE_URL
 
   const palette = {
     accent: "#6366f1",
@@ -45,7 +46,7 @@ export default function PayslipGeneration() {
   const fetchEmployees = async () => {
     setEmployeesLoading(true);
     try {
-      const res = await fetch("/api/employees/getAll", {
+      const res = await fetch(`${baseurl}/api/employees/getAll`, {
         credentials: "include"
       });
       if (res.ok) {
@@ -66,9 +67,9 @@ export default function PayslipGeneration() {
 
     setLoading(true);
     try {
-      let url = `/api/payroll/month/${selectedMonth}`;
+      let url = `${baseurl}/api/payroll/month/${selectedMonth}`;
       if (selectedEmployee) {
-        url = `/api/payroll/employee/${selectedEmployee}/month/${selectedMonth}`;
+        url = `${baseurl}/api/payroll/employee/${selectedEmployee}/month/${selectedMonth}`;
       }
 
       const res = await fetch(url, { credentials: "include" });

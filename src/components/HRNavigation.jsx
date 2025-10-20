@@ -23,6 +23,7 @@ const HRNavigation = React.memo(() => {
   const { user } = useAuth();
   const [currentTime, setCurrentTime] = useState(() => new Date());
   const [userDetails, setUserDetails] = useState(null);
+   const baseurl = import.meta.env.VITE_API_BASE_URL
 
   useEffect(() => {
     const interval = setInterval(() => setCurrentTime(new Date()), 1000);
@@ -53,23 +54,23 @@ const HRNavigation = React.memo(() => {
           // Use different API endpoints based on user role
           if (userRole === "hr") {
             // For HR users, fetch from users/me API (this endpoint exists)
-            console.log("Fetching HR user details from /api/users/me");
-            response = await fetch(`/api/users/me`, {
+            console.log(`Fetching HR user details from ${baseurl}/api/users/me`);
+            response = await fetch(`${baseurl}/api/users/me`, {
               method: "GET",
               credentials: "include",
             });
           } else if (userRole === "admin") {
             // For admin users, fetch from admin API
-            console.log("Fetching admin user details from /api/admins/me");
-            response = await fetch(`/api/admins/me`, {
+            console.log(`Fetching admin user details from ${baseurl}/api/admins/me`);
+            response = await fetch(`${baseurl}/api/admins/me`, {
               method: "GET",
               credentials: "include",
             });
           } else {
             // For employees or others, fetch from employees API
             const userId = currentUser.userId || currentUser.id;
-            console.log("Fetching employee user details from /api/employees/", userId);
-            response = await fetch(`/api/employees/${userId}`, {
+            console.log(`Fetching employee user details from ${baseurl}/api/employees/`, userId);
+            response = await fetch(`${baseurl}/api/employees/${userId}`, {
               method: "GET",
               credentials: "include",
             });

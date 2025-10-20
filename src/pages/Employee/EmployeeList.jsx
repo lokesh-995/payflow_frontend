@@ -32,6 +32,7 @@ export default function EmployeeList() {
   const [expError, setExpError] = useState("");
   const [expData, setExpData] = useState([]);
   const [expEmp, setExpEmp] = useState(null);
+   const baseurl = import.meta.env.VITE_API_BASE_URL;
 
   const handleShowPastExp = async (emp) => {
     setShowExpModal(true);
@@ -39,7 +40,7 @@ export default function EmployeeList() {
     setExpError("");
     setExpEmp(emp);
     try {
-      const res = await fetch(`/api/employees/${emp.employeeId}/experiences`);
+      const res = await fetch(`${baseurl}/api/employees/${emp.employeeId}/experiences`);
       if (!res.ok) throw new Error("Failed to fetch past experiences");
       const data = await res.json();
       setExpData(Array.isArray(data) ? data : []);
@@ -63,7 +64,7 @@ export default function EmployeeList() {
       setLoading(true);
       setError("");
       try {
-        const res = await fetch("/api/employees/getAll");
+        const res = await fetch(`${baseurl}/api/employees/getAll`);
         if (!res.ok) throw new Error("Failed to fetch employees");
         const data = await res.json();
         setEmployees(data);
@@ -193,7 +194,7 @@ export default function EmployeeList() {
                         onClick={async () => {
                           try {
                             const res = await fetch(
-                              `/api/employees/${emp.employeeId}/status`,
+                              `${baseurl}/api/employees/${emp.employeeId}/status`,
                               {
                                 method: "PUT",
                                 headers: { "Content-Type": "application/json" },

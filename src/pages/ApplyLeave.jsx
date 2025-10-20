@@ -29,6 +29,7 @@ export default function ApplyLeave() {
   const [loading, setLoading] = useState(false);
   const [employee, setEmployee] = useState(null);
   const [currentTime, setCurrentTime] = useState(() => new Date());
+   const baseurl = import.meta.env.VITE_API_BASE_URL
 
   useEffect(() => {
     const interval = setInterval(() => setCurrentTime(new Date()), 1000);
@@ -58,7 +59,7 @@ export default function ApplyLeave() {
         } else {
           // Fallback to API call if no localStorage data
           console.log("No localStorage data, fetching from API...");
-          const res = await fetch("/api/employees/me", {
+          const res = await fetch(`${baseurl}/api/employees/me`, {
             method: "GET",
             credentials: "include",
             headers: {
@@ -216,7 +217,7 @@ export default function ApplyLeave() {
       
       // Check for existing leave applications on the same date range
       console.log("Checking for existing leave applications...");
-      const existingLeavesResponse = await fetch(`/api/leaves/${employeeId}`, {
+      const existingLeavesResponse = await fetch(`${baseurl}/api/leaves/${employeeId}`, {
         method: "GET",
         credentials: "include",
         headers: {
@@ -268,7 +269,7 @@ export default function ApplyLeave() {
       }
       
       // Proceed with leave application if no overlap found
-      const response = await fetch(`/api/leaves/apply/${employeeId}`, {
+      const response = await fetch(`${baseurl}/api/leaves/apply/${employeeId}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

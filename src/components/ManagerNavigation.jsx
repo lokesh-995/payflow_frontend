@@ -23,7 +23,7 @@ const ManagerNavigation = React.memo(() => {
   const { user } = useAuth();
   const [currentTime, setCurrentTime] = useState(() => new Date());
   const [userDetails, setUserDetails] = useState(null);
-
+ const baseurl = import.meta.env.VITE_API_BASE_URL
   useEffect(() => {
     const interval = setInterval(() => setCurrentTime(new Date()), 1000);
     return () => clearInterval(interval);
@@ -47,7 +47,7 @@ const ManagerNavigation = React.memo(() => {
       // Fetch current user details from the backend
       if (currentUser && !userDetails) {
         try {
-          const response = await fetch(`/api/employees/current-user-role`, {
+          const response = await fetch(`${baseurl}/api/employees/current-user-role`, {
             method: "GET",
             credentials: "include",
           });

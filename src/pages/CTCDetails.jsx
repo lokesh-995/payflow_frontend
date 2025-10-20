@@ -31,6 +31,7 @@ export default function CTCDetails() {
   const [showHistory, setShowHistory] = useState(false);
   const [ctcHistory, setCTCHistory] = useState([]);
   const [historyLoading, setHistoryLoading] = useState(false);
+   const baseurl = import.meta.env.VITE_API_BASE_URL
 
   useEffect(() => {
     const fetchCTCData = async () => {
@@ -56,7 +57,7 @@ export default function CTCDetails() {
         console.log("Fetching CTC data for employee ID:", employeeId);
 
         // Fetch CTC data from backend - get the latest CTC record
-        const response = await fetch(`/api/ctc/employee/${employeeId}/latest`, {
+        const response = await fetch(`${baseurl}/api/ctc/employee/${employeeId}/latest`, {
           method: "GET",
           credentials: "include",
           headers: {
@@ -118,7 +119,7 @@ export default function CTCDetails() {
     setHistoryLoading(true);
     try {
       // Try the history endpoint first
-      let response = await fetch(`/api/ctc/employee/${employeeId}/history`, {
+      let response = await fetch(`${baseurl}/api/ctc/employee/${employeeId}/history`, {
         method: "GET",
         credentials: "include",
         headers: {
@@ -132,7 +133,7 @@ export default function CTCDetails() {
         setShowHistory(true);
       } else if (response.status === 404) {
         // Fallback to main CTC endpoint to get current record
-        response = await fetch(`/api/ctc/employee/${employeeId}`, {
+        response = await fetch(`${baseurl}/api/ctc/employee/${employeeId}`, {
           method: "GET",
           credentials: "include",
           headers: {

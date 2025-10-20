@@ -17,6 +17,7 @@ export default function PayrollProcessing() {
   const [loading, setLoading] = useState(false);
   const [employeesLoading, setEmployeesLoading] = useState(false);
   const [currentMonthInfo, setCurrentMonthInfo] = useState(null);
+   const baseurl = import.meta.env.VITE_API_BASE_URL
   
   // Pagination state for payroll records
   const [currentPage, setCurrentPage] = useState(1);
@@ -44,7 +45,7 @@ export default function PayrollProcessing() {
   // Fetch current month info
   const fetchCurrentMonthInfo = async () => {
     try {
-      const res = await fetch("/api/payroll/current-month", {
+      const res = await fetch(`${baseurl}/api/payroll/current-month`, {
         credentials: "include"
       });
       if (res.ok) {
@@ -61,7 +62,7 @@ export default function PayrollProcessing() {
   const fetchEmployees = async () => {
     setEmployeesLoading(true);
     try {
-      const res = await fetch("/api/employees/getAll", {
+      const res = await fetch(`${baseurl}/api/employees/getAll`, {
         credentials: "include"
       });
       if (res.ok) {
@@ -85,7 +86,7 @@ export default function PayrollProcessing() {
 
     setLoading(true);
     try {
-      const res = await fetch(`/api/payroll/generate/all?month=${selectedMonth}`, {
+      const res = await fetch(`${baseurl}/api/payroll/generate/all?month=${selectedMonth}`, {
         method: "POST",
         credentials: "include"
       });
@@ -115,7 +116,7 @@ export default function PayrollProcessing() {
 
     setLoading(true);
     try {
-      const res = await fetch(`/api/payroll/generate/employee/${selectedEmployee}?month=${selectedMonth}`, {
+      const res = await fetch(`${baseurl}/api/payroll/generate/employee/${selectedEmployee}?month=${selectedMonth}`, {
         method: "POST",
         credentials: "include"
       });
@@ -143,8 +144,8 @@ export default function PayrollProcessing() {
     setLoading(true);
     try {
       const [payrollRes, summaryRes] = await Promise.all([
-        fetch(`/api/payroll/month/${month}`, { credentials: "include" }),
-        fetch(`/api/payroll/summary/month/${month}`, { credentials: "include" })
+        fetch(`${baseurl}/api/payroll/month/${month}`, { credentials: "include" }),
+        fetch(`${baseurl}/api/payroll/summary/month/${month}`, { credentials: "include" })
       ]);
 
       if (payrollRes.ok) {

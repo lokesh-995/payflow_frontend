@@ -41,6 +41,7 @@ export default function EmployeeDashboard() {
   const [currentTime, setCurrentTime] = useState(() => new Date());
   const [currentPage, setCurrentPage] = useState(1);
   const recordsPerPage = 3;
+   const baseurl = import.meta.env.VITE_API_BASE_URL
 
   // Debug: Log authentication info
   useEffect(() => {
@@ -90,7 +91,7 @@ export default function EmployeeDashboard() {
             "Content-Type": "application/json",
           };
 
-          const res = await fetch("/api/employees/me", {
+          const res = await fetch(`${baseurl}/api/employees/me`, {
             method: "GET",
             credentials: "include",
             headers: headers,
@@ -122,7 +123,7 @@ export default function EmployeeDashboard() {
           console.log("Fetching complete employee profile for ID:", employeeId);
           
           try {
-            const profileRes = await fetch(`/api/employees/${employeeId}`, {
+            const profileRes = await fetch(`${baseurl}/api/employees/${employeeId}`, {
               method: "GET",
               credentials: "include",
               headers: {
@@ -145,7 +146,7 @@ export default function EmployeeDashboard() {
           // Fetch leave data from backend
           console.log("Fetching leave data for employee ID:", employeeId);
           
-          const leaveRes = await fetch(`/api/leaves/${employeeId}`, {
+          const leaveRes = await fetch(`${baseurl}/api/leaves/${employeeId}`, {
             method: "GET",
             credentials: "include",
             headers: {

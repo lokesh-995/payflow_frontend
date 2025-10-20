@@ -23,6 +23,7 @@ const EmployeeNavigation = React.memo(() => {
   const { user } = useAuth();
   const [currentTime, setCurrentTime] = useState(() => new Date());
   const [employeeDetails, setEmployeeDetails] = useState(null);
+   const baseurl = import.meta.env.VITE_API_BASE_URL
 
   useEffect(() => {
     const interval = setInterval(() => setCurrentTime(new Date()), 1000);
@@ -53,15 +54,15 @@ const EmployeeNavigation = React.memo(() => {
 
           // For employees, fetch from employees API
           if (employeeId) {
-            console.log("Fetching employee details from /api/employees/", employeeId);
-            response = await fetch(`/api/employees/${employeeId}`, {
+            console.log(`Fetching employee details from ${baseurl}/api/employees/`, employeeId);
+            response = await fetch(`${baseurl}/api/employees/${employeeId}`, {
               method: "GET",
               credentials: "include",
             });
           } else {
             // Fallback to /me endpoint
-            console.log("Fetching employee details from /api/employees/me");
-            response = await fetch(`/api/employees/me`, {
+            console.log(`Fetching employee details from ${baseurl}/api/employees/me`);
+            response = await fetch(`${baseurl}/api/employees/me`, {
               method: "GET",
               credentials: "include",
             });
@@ -69,7 +70,7 @@ const EmployeeNavigation = React.memo(() => {
           
           if (response && response.ok) {
             const details = await response.json();
-            console.log("Successfully fetched employee details:", details);
+            console.log(`Successfully fetched employee details:`, details);
             setEmployeeDetails(details);
           } else {
             console.log("Failed to fetch employee details. Response status:", response?.status);

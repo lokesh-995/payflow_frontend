@@ -16,6 +16,7 @@ export default function EmployeePayslips() {
   const [showPayslip, setShowPayslip] = useState(false);
   const [loading, setLoading] = useState(false);
   const [employee, setEmployee] = useState(null);
+   const baseurl = import.meta.env.VITE_API_BASE_URL;
 
   const palette = {
     accent: "#6366f1",
@@ -51,7 +52,7 @@ export default function EmployeePayslips() {
     setLoading(true);
     try {
       const employeeId = employee.employeeId || employee.id;
-      const res = await fetch(`/api/payroll/employee/${employeeId}/month/${selectedMonth}`, { 
+      const res = await fetch(`${baseurl}/api/payroll/employee/${employeeId}/month/${selectedMonth}`, { 
         credentials: "include" 
       });
       

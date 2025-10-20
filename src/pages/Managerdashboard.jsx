@@ -41,6 +41,7 @@ export default function ManagerDashboard() {
   const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const employeesPerPage = 10;
+   const baseurl = import.meta.env.VITE_API_BASE_URL
   
   // Modal states for employee details
   const [showDetailsModal, setShowDetailsModal] = useState(false);
@@ -62,7 +63,7 @@ export default function ManagerDashboard() {
 
   const fetchEmployees = () => {
     setLoading(true);
-    fetch("/api/employees/getAll")
+    fetch(`${baseurl}/api/employees/getAll`)
       .then((res) => {
         if (!res.ok) throw new Error("Failed to load employees");
         return res.json();
@@ -81,7 +82,7 @@ export default function ManagerDashboard() {
   const fetchPendingLeaveRequests = async () => {
     setPendingLeavesLoading(true);
     try {
-      const response = await fetch("/api/leaves/all", {
+      const response = await fetch(`${baseurl}/api/leaves/all`, {
         method: "GET",
         credentials: "include",
         headers: {
@@ -191,7 +192,7 @@ export default function ManagerDashboard() {
 
   const handleToggleStatus = async (employeeId, currentStatus) => {
     try {
-      const res = await fetch(`/api/employees/${employeeId}/status`, {
+      const res = await fetch(`${baseurl}/api/employees/${employeeId}/status`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ isActive: !currentStatus }),
@@ -226,7 +227,7 @@ export default function ManagerDashboard() {
     setExpError(null);
     
     try {
-      const res = await fetch(`/api/employees/${emp.employeeId || emp.id}/experiences`);
+      const res = await fetch(`${baseurl}/api/employees/${emp.employeeId || emp.id}/experiences`);
       if (res.ok) {
         const data = await res.json();
         setExpData(Array.isArray(data) ? data : []);
